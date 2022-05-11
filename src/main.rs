@@ -2,15 +2,20 @@ use rppal::gpio;
 use std::{thread, time::Duration};
 
 fn main() {
-    let sensor1 = BeltSensor::new(0, 0);
+    //let sensor1 = BeltSensor::new(0, 0);
+
+    test_motor();
+
+    //let push_motor;
+    //println!("Hello, world!");
+}
+
+fn test_motor() {
     let gpio_instance = gpio::Gpio::new().unwrap();
     let mut gpio_pin = gpio_instance.get(17).unwrap().into_output();
     gpio_pin.set_high();
     thread::sleep(Duration::from_secs(1));
     gpio_pin.set_low();
-
-    //let push_motor;
-    println!("Hello, world!");
 }
 
 struct Motor {
