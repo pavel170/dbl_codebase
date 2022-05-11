@@ -1,25 +1,26 @@
-use rppal::gpio;
-use rppal::i2c;
+use rppal::{gpio, i2c, pwm, pwm::Channel};
 use std::{thread, time::Duration};
 
 fn main() {
-    //let sensor1 = BeltSensor::new(0, 0);
-    let gpio_instance = gpio::Gpio::new().unwrap();
+    run_tests();
 
-    test_motor(&gpio_instance);
+    //let sensor1 = BeltSensor::new(0, 0);
 
     //let push_motor;
     //println!("Hello, world!");
 }
 
-fn test_motor(gpio_instance: &gpio::Gpio) {
-    let mut gpio_pin = gpio_instance.get(17).unwrap().into_output();
-    gpio_pin.set_high();
-    thread::sleep(Duration::from_secs(1));
-    gpio_pin.set_low();
+fn run_tests() {
+    test_motor();
+    test_input();
 }
 
-fn test_input(gpio_instance: &gpio::Gpio) {
+fn test_motor() {
+    let mut pwm0 = pwm::Pwm::new(Channel::Pwm0).unwrap();
+    // TODO rotate motor
+}
+
+fn test_input() {
     let mut i2c_inst = i2c::I2c::new().unwrap();
     let mut buffer = vec![0; 8];
     let value = i2c_inst.read(&mut buffer);
