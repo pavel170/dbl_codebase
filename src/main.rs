@@ -1,5 +1,14 @@
+use rppal::gpio;
+use std::{thread, time::Duration};
+
 fn main() {
     let sensor1 = BeltSensor::new(0, 0);
+    let gpio_instance = gpio::Gpio::new().unwrap();
+    let mut gpio_pin = gpio_instance.get(17).unwrap().into_output();
+    gpio_pin.set_high();
+    thread::sleep(Duration::from_secs(1));
+    gpio_pin.set_low();
+
     //let push_motor;
     println!("Hello, world!");
 }
@@ -19,13 +28,13 @@ pub enum MotorType {
 
 impl Motor {
     fn new(id: i32, motor_type: MotorType) -> Self {
-        Motor {
+        Self {
             id: id,
             motor_type: motor_type,
             active: false,
             power: 0,
             at_reset: false,
-        };
+        }
     }
 
     fn push(&mut self, time: i32) {
