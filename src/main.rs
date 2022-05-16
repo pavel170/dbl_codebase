@@ -15,7 +15,7 @@ fn main() {
 
 fn run_tests() {
     test_motor();
-    test_input();
+    //test_input();
 }
 
 fn test_motor() {
@@ -23,8 +23,8 @@ fn test_motor() {
     let pwm0 =
         pwm::Pwm::with_frequency(Channel::Pwm0, 1000.0, 0.5, pwm::Polarity::Normal, false).unwrap();
     pwm0.enable().ok();
-    thread::sleep(Duration::from_millis(1000));
-    pwm0.disable().ok();
+    //thread::sleep(Duration::from_millis(1000));
+    //pwm0.disable().ok();
 }
 
 fn test_input() {
