@@ -28,13 +28,15 @@ fn test_motor() {
 }
 
 fn test_input() {
+    const ADDR: u16 = 0x23;
+    const REG: u8 = 0x10;
     let mut i2c_inst = i2c::I2c::new().unwrap();
+    i2c_inst.set_slave_address(ADDR).ok();
     let mut buffer = vec![0; 8];
-    let value = i2c_inst.read(&mut buffer);
-    println!("{}", value.unwrap());
+    i2c_inst.block_read(REG, &mut buffer);
+    let mut reg = [0u8; 2];
+    println!("{}", (reg[1] as f64 + (256.0 * (reg[0] as f64))) / 1.2);
 }
-
-fn test_sensor() {}
 
 struct Motor {
     id: i32,
