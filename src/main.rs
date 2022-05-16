@@ -18,8 +18,20 @@ fn main() {
 }
 
 fn run_tests() {
-    test_motor();
+    //test_motor();
     //test_input();
+    gpio_test();
+}
+
+fn gpio_test() {
+    let gpio_inst = Gpio::new().unwrap();
+
+    let mut pin = gpio_inst.get(17).unwrap();
+
+    let mut outpin = pin.into_output();
+    outpin.set_high();
+    thread::sleep(Duration::from_millis(1000));
+    outpin.set_low();
 }
 
 fn test_motor() {
