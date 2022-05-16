@@ -18,17 +18,17 @@ fn main() {
 }
 
 fn run_tests() {
-    pwm_test()
-    //test_motor();
+    pwm_test();
+    test_motor();
     //test_input();
     //gpio_test();
 }
 
 fn pwm_test() {
     let pwm0 =
-        pwm::Pwm::with_frequency(Channel::Pwm0, 1.0, 0.5, pwm::Polarity::Normal, true).unwrap();
+        pwm::Pwm::with_frequency(Channel::Pwm1, 1.0, 0.5, pwm::Polarity::Normal, true).unwrap();
 
-    loop {}
+    thread::sleep(Duration::from_millis(10000));
 }
 
 fn gpio_test() {
@@ -80,8 +80,8 @@ fn test_motor() {
     motor_latch_pin.set_high();
 
     let pwm0 =
-        pwm::Pwm::with_frequency(Channel::Pwm1, 200.0, 1.0, pwm::Polarity::Normal, false).unwrap();
-    pwm0.enable().ok();
+        pwm::Pwm::with_frequency(Channel::Pwm0, 200.0, 1.0, pwm::Polarity::Normal, true).unwrap();
+    loop {}
 }
 
 fn test_input() {
