@@ -26,8 +26,7 @@ fn run_tests() {
 
 fn pwm_test() {
     let pwm0 =
-        pwm::Pwm::with_frequency(Channel::Pwm1, 200.0, 1.0, pwm::Polarity::Normal, false).unwrap();
-    pwm0.enable().ok();
+        pwm::Pwm::with_frequency(Channel::Pwm1, 200.0, 1.0, pwm::Polarity::Normal, true).unwrap();
 }
 
 fn gpio_test() {
