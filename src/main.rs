@@ -34,8 +34,8 @@ fn test_input() {
         let mut i2c_inst = i2c::I2c::new().unwrap();
         i2c_inst.set_slave_address(ADDR).ok();
         let mut buffer = vec![0; 8];
-        i2c_inst.block_read(REG, &mut buffer);
         let mut reg = [0u8; 2];
+        i2c_inst.block_read(REG, &mut reg);
         println!("{}", (reg[1] as f64 + (256.0 * (reg[0] as f64))) / 1.2);
         thread::sleep(Duration::from_millis(200));
     }
