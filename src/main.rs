@@ -29,9 +29,12 @@ fn gpio_test() {
     let mut pin = gpio_inst.get(17).unwrap();
 
     let mut outpin = pin.into_output();
-    outpin.set_high();
-    thread::sleep(Duration::from_millis(1000));
-    outpin.set_low();
+    loop {
+        outpin.set_high();
+        thread::sleep(Duration::from_millis(1000));
+        outpin.set_low();
+        thread::sleep(Duration::from_millis(1000));
+    }
 }
 
 fn test_motor() {
