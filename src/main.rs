@@ -1,4 +1,8 @@
-use rppal::{gpio, i2c, pwm, pwm::Channel};
+use rppal::{
+    gpio::{self, Gpio},
+    i2c, pwm,
+    pwm::Channel,
+};
 use std::{
     thread::{self, Thread},
     time::Duration,
@@ -19,12 +23,44 @@ fn run_tests() {
 }
 
 fn test_motor() {
-    //let mut pwm0 = pwm::Pwm::new(Channel::Pwm0).unwrap();
+    const MOTOR1_A: usize = 2;
+    const MOTOR1_B: usize = 3;
+    const MOTOR2_A: usize = 1;
+    const MOTOR2_B: usize = 4;
+    const MOTOR4_A: usize = 0;
+    const MOTOR4_B: usize = 6;
+    const MOTOR3_A: usize = 5;
+    const MOTOR3_B: usize = 7;
+
+    let gpio_instance: Gpio = Gpio::new().unwrap();
+    let mut motor_latch_pin = gpio_instance.get(11).unwrap().into_output();
+    let mut motor_clk_pin = gpio_instance.get(13).unwrap().into_output();
+    let mut motor_data_pin = gpio_instance.get(15).unwrap().into_output();
+
+    let mut latch_state = 0;
+
+    latch_state |= 1 << MOTOR1_A;
+    latch_state &= !(1 << MOTOR1_B);
+
+    motor_latch_pin.set_low();
+    motor_data_pin.set_low();
+    for i in 0..8 {
+        motor_clk_pin.set_low();
+        if latch_state & (1 << (7 - i)) > 0 {
+            motor_data_pin.set_high();
+        } else {
+            motor_data_pin.set_low();
+        }
+        motor_clk_pin.set_high();
+    }
+
+    motor_latch_pin.set_high();
+
     let pwm0 =
         pwm::Pwm::with_frequency(Channel::Pwm0, 1000.0, 0.5, pwm::Polarity::Normal, false).unwrap();
     pwm0.enable().ok();
-    //thread::sleep(Duration::from_millis(1000));
-    //pwm0.disable().ok();
+    thread::sleep(Duration::from_millis(3000));
+    pwm0.disable().ok();
 }
 
 fn test_input() {
