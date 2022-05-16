@@ -57,7 +57,7 @@ fn test_motor() {
     motor_latch_pin.set_high();
 
     let pwm0 =
-        pwm::Pwm::with_frequency(Channel::Pwm0, 1000.0, 0.5, pwm::Polarity::Normal, false).unwrap();
+        pwm::Pwm::with_frequency(Channel::Pwm0, 200.0, 1.0, pwm::Polarity::Normal, false).unwrap();
     pwm0.enable().ok();
     thread::sleep(Duration::from_millis(3000));
     pwm0.disable().ok();
