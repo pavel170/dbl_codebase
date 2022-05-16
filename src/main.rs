@@ -1,5 +1,8 @@
 use rppal::{gpio, i2c, pwm, pwm::Channel};
-use std::{thread, time::Duration};
+use std::{
+    thread::{self, Thread},
+    time::Duration,
+};
 
 fn main() {
     run_tests();
@@ -16,8 +19,12 @@ fn run_tests() {
 }
 
 fn test_motor() {
-    let mut pwm0 = pwm::Pwm::new(Channel::Pwm0).unwrap();
-    // TODO rotate motor
+    //let mut pwm0 = pwm::Pwm::new(Channel::Pwm0).unwrap();
+    let pwm0 =
+        pwm::Pwm::with_frequency(Channel::Pwm0, 1000.0, 0.5, pwm::Polarity::Normal, false).unwrap();
+    pwm0.enable().ok();
+    thread::sleep(Duration::from_millis(1000));
+    pwm0.disable().ok();
 }
 
 fn test_input() {
