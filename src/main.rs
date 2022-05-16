@@ -18,9 +18,16 @@ fn main() {
 }
 
 fn run_tests() {
+    pwm_test()
     //test_motor();
     //test_input();
-    gpio_test();
+    //gpio_test();
+}
+
+fn pwm_test() {
+    let pwm0 =
+        pwm::Pwm::with_frequency(Channel::Pwm1, 200.0, 1.0, pwm::Polarity::Normal, false).unwrap();
+    pwm0.enable().ok();
 }
 
 fn gpio_test() {
