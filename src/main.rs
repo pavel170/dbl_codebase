@@ -76,7 +76,7 @@ fn motor_dir(dir: i16) {
 fn kick_test() {
     motor_dir(1);
     let pwm1 =
-        pwm::Pwm::with_frequency(Channel::Pwm1, 200.0, 0.1, pwm::Polarity::Normal, true).unwrap();
+        pwm::Pwm::with_frequency(Channel::Pwm1, 200.0, 1.0, pwm::Polarity::Normal, true).unwrap();
     thread::sleep(Duration::from_millis(300));
     pwm1.set_duty_cycle(0.3).ok();
     motor_dir(-1);
