@@ -22,12 +22,12 @@ fn main() {
 fn run_tests() {
     //test_color_input();
     //touch_test();
-    //kick_test();
+    kick_test();
     //new_motor_test();
     //pwm_test();
     //test_motor();
     //test_input();
-    gpio_test();
+    //gpio_test();
 }
 
 fn pwm_test() {
