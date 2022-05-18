@@ -76,9 +76,9 @@ fn kick_test() {
     motor_dir(1);
     let pwm1 =
         pwm::Pwm::with_frequency(Channel::Pwm1, 200.0, 1.0, pwm::Polarity::Normal, true).unwrap();
-    thread::sleep(Duration::from_millis(500));
+    thread::sleep(Duration::from_millis(300));
     motor_dir(-1);
-    thread::sleep(Duration::from_millis(500));
+    thread::sleep(Duration::from_millis(100));
     pwm1.disable().ok();
 }
 
