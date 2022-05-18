@@ -72,10 +72,9 @@ fn motor_dir(dir: i16) {
 
     motor_latch_pin.set_high();
 
-    println!("hey");
-
     let mut gpio_enable = gpio_instance.get(4).unwrap().into_output();
     gpio_enable.set_low();
+    println!("{}", gpio_enable.is_set_low());
 }
 
 fn kick_test() {
