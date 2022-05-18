@@ -66,8 +66,16 @@ fn new_motor_test() {
     pwm_4.set_low();
 
     let pwm1 =
-        pwm::Pwm::with_frequency(Channel::Pwm1, 200.0, 0.4, pwm::Polarity::Normal, true).unwrap();
-    thread::sleep(Duration::from_millis(5000));
+        pwm::Pwm::with_frequency(Channel::Pwm1, 200.0, 1.0, pwm::Polarity::Normal, true).unwrap();
+    thread::sleep(Duration::from_millis(2000));
+    pwm1.set_duty_cycle(0.8).ok();
+    thread::sleep(Duration::from_millis(2000));
+    pwm1.set_duty_cycle(0.6).ok();
+    thread::sleep(Duration::from_millis(2000));
+    pwm1.set_duty_cycle(0.4).ok();
+    thread::sleep(Duration::from_millis(2000));
+    pwm1.set_duty_cycle(0.2).ok();
+    thread::sleep(Duration::from_millis(2000));
     pwm1.disable().ok();
 }
 
