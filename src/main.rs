@@ -82,6 +82,14 @@ fn kick_test() {
     pwm1.disable().ok();
 }
 
+fn touch_test() {
+    let gpio_instance: Gpio = Gpio::new().unwrap();
+    let input_pin = gpio_instance.get(24).unwrap().into_input();
+    loop {
+        println!("reading: {}", input_pin.read());
+    }
+}
+
 fn new_motor_test() {
     let pwm1 =
         pwm::Pwm::with_frequency(Channel::Pwm1, 200.0, 1.0, pwm::Polarity::Normal, true).unwrap();
