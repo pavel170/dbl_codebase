@@ -85,7 +85,7 @@ fn kick_test() {
 
 fn touch_test() {
     let gpio_instance: Gpio = Gpio::new().unwrap();
-    let input_pin = gpio_instance.get(24).unwrap().into_input();
+    let input_pin = gpio_instance.get(23).unwrap().into_input();
     loop {
         thread::sleep(Duration::from_millis(20));
         println!("reading: {}", input_pin.read());
