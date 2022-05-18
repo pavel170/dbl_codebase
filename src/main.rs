@@ -87,6 +87,7 @@ fn touch_test() {
     let gpio_instance: Gpio = Gpio::new().unwrap();
     let input_pin = gpio_instance.get(24).unwrap().into_input();
     loop {
+        thread::sleep(Duration::from_millis(200));
         println!("reading: {}", input_pin.read());
     }
 }
