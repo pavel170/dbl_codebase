@@ -38,8 +38,8 @@ fn new_motor_test() {
 
     let mut latch_state = 0;
 
-    latch_state |= 1 << MOTOR1_A;
-    latch_state &= !(1 << MOTOR1_B);
+    latch_state |= 1 << MOTOR1_B;
+    latch_state &= !(1 << MOTOR1_A);
 
     let gpio_instance: Gpio = Gpio::new().unwrap();
     let mut motor_latch_pin = gpio_instance.get(17).unwrap().into_output();
