@@ -78,7 +78,7 @@ fn kick_test() {
     let pwm1 =
         pwm::Pwm::with_frequency(Channel::Pwm1, 200.0, 1.0, pwm::Polarity::Normal, true).unwrap();
     thread::sleep(Duration::from_millis(300));
-    pwm1.set_duty_cycle(0.3).ok();
+    pwm1.set_duty_cycle(0.4).ok();
     motor_dir(-1);
     while !read_touch_val() {
         println!("turning");
