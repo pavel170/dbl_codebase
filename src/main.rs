@@ -76,7 +76,7 @@ fn motor_dir(dir: i16) {
 fn kick_test() {
     motor_dir(1);
     let pwm1 =
-        pwm::Pwm::with_frequency(Channel::Pwm1, 200.0, 0.7, pwm::Polarity::Normal, true).unwrap();
+        pwm::Pwm::with_frequency(Channel::Pwm1, 200.0, 0.5, pwm::Polarity::Normal, true).unwrap();
     thread::sleep(Duration::from_millis(300));
     motor_dir(-1);
     while !read_touch_val() {
