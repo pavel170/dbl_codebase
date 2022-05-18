@@ -49,14 +49,14 @@ fn new_motor_test() {
     motor_latch_pin.set_low();
     motor_data_pin.set_low();
     for i in 0..8 {
-        thread::sleep(Duration::from_millis(100));
         motor_clk_pin.set_low();
         if latch_state & (1 << (7 - i)) > 0 {
+            println!("{}, {}", i, "high");
             motor_data_pin.set_high();
         } else {
+            println!("{}, {}", i, "low");
             motor_data_pin.set_low();
         }
-        thread::sleep(Duration::from_millis(100));
         motor_clk_pin.set_high();
     }
 
