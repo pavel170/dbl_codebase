@@ -18,7 +18,8 @@ fn main() {
 }
 
 fn run_tests() {
-    kick_test();
+    touch_test();
+    //kick_test();
     //new_motor_test();
     //pwm_test();
     //test_motor();
