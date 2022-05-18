@@ -80,12 +80,15 @@ fn kick_test() {
     motor_dir(1);
     let pwm1 =
         pwm::Pwm::with_frequency(Channel::Pwm1, 200.0, 1.0, pwm::Polarity::Normal, true).unwrap();
+    println!("turn forward");
     thread::sleep(Duration::from_millis(300));
     pwm1.set_duty_cycle(0.4).ok();
     motor_dir(-1);
+    println!("turning back");
     while !read_touch_val() {
-        println!("turning");
+        // wait while turning
     }
+    println!("stop");
     pwm1.disable().ok();
 }
 
