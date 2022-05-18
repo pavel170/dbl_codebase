@@ -65,11 +65,10 @@ fn new_motor_test() {
     let mut pwm_4 = gpio_instance.get(4).unwrap().into_output();
     pwm_4.set_low();
 
-    let pwm0 =
+    let pwm1 =
         pwm::Pwm::with_frequency(Channel::Pwm1, 200.0, 0.4, pwm::Polarity::Normal, true).unwrap();
-    loop {}
-    //thread::sleep(Duration::from_millis(5000));
-    //pwm0.disable().ok();
+    thread::sleep(Duration::from_millis(5000));
+    pwm1.disable().ok();
 }
 
 fn gpio_test() {
