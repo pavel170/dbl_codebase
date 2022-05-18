@@ -62,7 +62,7 @@ fn new_motor_test() {
 
     motor_latch_pin.set_high();
 
-    let mut pwm_pin = gpio_instance.get(19).unwrap().into_output();
+    let mut pwm_pin = gpio_instance.get(18).unwrap().into_output();
     pwm_pin.set_high();
 
     let pwm1 =
