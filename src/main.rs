@@ -65,7 +65,7 @@ fn new_motor_test() {
     let pwm0 =
         pwm::Pwm::with_frequency(Channel::Pwm0, 200.0, 0.5, pwm::Polarity::Normal, true).unwrap();
     thread::sleep(Duration::from_millis(3000));
-    pwm0.disable();
+    pwm0.set_duty_cycle(0.0).ok();
 }
 
 fn gpio_test() {
