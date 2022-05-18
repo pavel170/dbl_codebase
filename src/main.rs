@@ -42,9 +42,9 @@ fn new_motor_test() {
     latch_state &= !(1 << MOTOR1_B);
 
     let gpio_instance: Gpio = Gpio::new().unwrap();
-    let mut motor_latch_pin = gpio_instance.get(11).unwrap().into_output();
-    let mut motor_clk_pin = gpio_instance.get(13).unwrap().into_output();
-    let mut motor_data_pin = gpio_instance.get(15).unwrap().into_output();
+    let mut motor_latch_pin = gpio_instance.get(17).unwrap().into_output();
+    let mut motor_clk_pin = gpio_instance.get(27).unwrap().into_output();
+    let mut motor_data_pin = gpio_instance.get(22).unwrap().into_output();
 
     motor_latch_pin.set_low();
     motor_data_pin.set_low();
@@ -62,8 +62,8 @@ fn new_motor_test() {
 
     motor_latch_pin.set_high();
 
-    let mut gpio_12 = gpio_instance.get(12).unwrap().into_output();
-    let mut gpio_7 = gpio_instance.get(7).unwrap().into_output();
+    let mut gpio_12 = gpio_instance.get(18).unwrap().into_output();
+    let mut gpio_7 = gpio_instance.get(4).unwrap().into_output();
 
     gpio_12.set_high();
     gpio_7.set_low();
