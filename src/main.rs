@@ -67,6 +67,7 @@ fn new_motor_test() {
 
     let pwm0 =
         pwm::Pwm::with_frequency(Channel::Pwm0, 2000.0, 0.4, pwm::Polarity::Normal, true).unwrap();
+    loop {}
     //thread::sleep(Duration::from_millis(5000));
     //pwm0.disable().ok();
 }
