@@ -86,7 +86,6 @@ fn kick_test() {
     while !read_touch_val() {
         println!("turning");
     }
-    thread::sleep(Duration::from_millis(230));
     pwm1.disable().ok();
 }
 
