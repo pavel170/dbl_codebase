@@ -72,8 +72,8 @@ fn motor_dir(dir: i16) {
 
     motor_latch_pin.set_high();
 
-    let mut pwm_4 = gpio_instance.get(4).unwrap().into_output();
-    pwm_4.set_low();
+    let mut gpio_enable = gpio_instance.get(4).unwrap().into_output();
+    gpio_enable.set_low();
 }
 
 fn kick_test() {
