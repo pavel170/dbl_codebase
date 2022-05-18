@@ -18,8 +18,9 @@ fn main() {
 }
 
 fn run_tests() {
-    pwm_test();
-    test_motor();
+    new_motor_test();
+    //pwm_test();
+    //test_motor();
     //test_input();
     //gpio_test();
 }
@@ -29,6 +30,37 @@ fn pwm_test() {
         pwm::Pwm::with_frequency(Channel::Pwm1, 1.0, 0.5, pwm::Polarity::Normal, true).unwrap();
 
     thread::sleep(Duration::from_millis(10000));
+}
+
+fn new_motor_test() {
+    const MOTOR1_A: usize = 2;
+    const MOTOR1_B: usize = 3;
+
+    let mut latch_state = 0;
+
+    latch_state |= 1 << MOTOR1_A;
+    latch_state &= !(1 << MOTOR1_B);
+
+    let gpio_instance: Gpio = Gpio::new().unwrap();
+    let mut motor_latch_pin = gpio_instance.get(11).unwrap().into_output();
+    let mut motor_clk_pin = gpio_instance.get(13).unwrap().into_output();
+    let mut motor_data_pin = gpio_instance.get(15).unwrap().into_output();
+
+    motor_latch_pin.set_low();
+    motor_data_pin.set_low();
+    for i in 0..8 {
+        motor_clk_pin.set_low();
+        if latch_state & (1 << (7 - i)) > 0 {
+            motor_data_pin.set_high();
+        } else {
+            motor_data_pin.set_low();
+        }
+        motor_clk_pin.set_high();
+    }
+
+    motor_latch_pin.set_high();
+
+    let pwm0 = pwm::Pwm::with_frequency(Channel::Pwm0, 200.0, 0.5, pwm::Polarity::Normal, true);
 }
 
 fn gpio_test() {
