@@ -32,14 +32,19 @@ fn pwm_test() {
     thread::sleep(Duration::from_millis(10000));
 }
 
-fn new_motor_test() {
+fn motor_dir(dir: i16) {
     const MOTOR1_A: usize = 2;
     const MOTOR1_B: usize = 3;
 
     let mut latch_state = 0;
 
-    latch_state |= 1 << MOTOR1_B;
-    latch_state &= !(1 << MOTOR1_A);
+    if dir == 1 {
+        latch_state |= 1 << MOTOR1_A;
+        latch_state &= !(1 << MOTOR1_B);
+    } else if dir == -1 {
+        latch_state |= 1 << MOTOR1_B;
+        latch_state &= !(1 << MOTOR1_A);
+    }
 
     let gpio_instance: Gpio = Gpio::new().unwrap();
     let mut motor_latch_pin = gpio_instance.get(17).unwrap().into_output();
@@ -64,7 +69,19 @@ fn new_motor_test() {
 
     let mut pwm_4 = gpio_instance.get(4).unwrap().into_output();
     pwm_4.set_low();
+}
 
+fn kick_test() {
+    motor_dir(1);
+    let pwm1 =
+        pwm::Pwm::with_frequency(Channel::Pwm1, 200.0, 1.0, pwm::Polarity::Normal, true).unwrap();
+    thread::sleep(Duration::from_millis(500));
+    motor_dir(-1);
+    thread::sleep(Duration::from_millis(500));
+    pwm1.disable().ok();
+}
+
+fn new_motor_test() {
     let pwm1 =
         pwm::Pwm::with_frequency(Channel::Pwm1, 200.0, 1.0, pwm::Polarity::Normal, true).unwrap();
     thread::sleep(Duration::from_millis(2000));
