@@ -1,3 +1,4 @@
+use linux_embedded_hal::I2cdev;
 use rppal::{
     gpio::{self, Gpio},
     i2c, pwm,
@@ -7,6 +8,7 @@ use std::{
     thread::{self, Thread},
     time::Duration,
 };
+use tcs3472::Tcs3472;
 
 fn main() {
     run_tests();
@@ -18,8 +20,9 @@ fn main() {
 }
 
 fn run_tests() {
+    test_color_input();
     //touch_test();
-    kick_test();
+    //kick_test();
     //new_motor_test();
     //pwm_test();
     //test_motor();
@@ -170,16 +173,32 @@ fn test_motor() {
     loop {}
 }
 
-fn test_input() {
+fn test_color_input() {
     let mut i2c_inst = i2c::I2c::new().unwrap();
-    const ADDR: u16 = 0x23;
-    const REG: u8 = 0x10;
-    let mut reg = [0u8; 2];
+    //const ADDR: u16 = 0x23;
+    //const REG: u8 = 0x10;
+    //let mut reg = [0u8; 2];
+    //loop {
+    //i2c_inst.set_slave_address(ADDR).ok();
+    //i2c_inst.block_read(REG, &mut reg);
+    //println!("{}", (reg[1] as f64 + (256.0 * (reg[0] as f64))) / 1.2);
+    //thread::sleep(Duration::from_millis(200));
+    //}
+    let dev = I2cdev::new("/dev/i2c-1").unwrap();
+    let mut sensor = Tcs3472::new(dev);
+    sensor.enable().unwrap();
+    sensor.enable_rgbc().unwrap();
+    while !sensor.is_rgbc_status_valid().unwrap() {
+        // wait for measurement
+    }
+
     loop {
-        i2c_inst.set_slave_address(ADDR).ok();
-        i2c_inst.block_read(REG, &mut reg);
-        println!("{}", (reg[1] as f64 + (256.0 * (reg[0] as f64))) / 1.2);
-        thread::sleep(Duration::from_millis(200));
+        let measurement = sensor.read_all_channels().unwrap();
+
+        println!(
+            "Measurements: clear = {}, red = {}, green = {}, blue = {}",
+            measurement.clear, measurement.red, measurement.green, measurement.blue
+        );
     }
 }
 
