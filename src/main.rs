@@ -40,11 +40,11 @@ fn motor_dir(dir: i16) {
     let mut latch_state = 0;
 
     if dir == 1 {
-        latch_state |= 1 << MOTOR1_A;
-        latch_state &= !(1 << MOTOR1_B);
-    } else if dir == -1 {
         latch_state |= 1 << MOTOR1_B;
         latch_state &= !(1 << MOTOR1_A);
+    } else if dir == -1 {
+        latch_state |= 1 << MOTOR1_A;
+        latch_state &= !(1 << MOTOR1_B);
     }
 
     let gpio_instance: Gpio = Gpio::new().unwrap();
