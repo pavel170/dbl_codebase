@@ -18,8 +18,8 @@ fn main() {
 }
 
 fn run_tests() {
-    touch_test();
-    //kick_test();
+    //touch_test();
+    kick_test();
     //new_motor_test();
     //pwm_test();
     //test_motor();
@@ -79,6 +79,9 @@ fn kick_test() {
         pwm::Pwm::with_frequency(Channel::Pwm1, 200.0, 1.0, pwm::Polarity::Normal, true).unwrap();
     thread::sleep(Duration::from_millis(300));
     motor_dir(-1);
+    while !read_touch_val() {
+        println!("turning");
+    }
     thread::sleep(Duration::from_millis(230));
     pwm1.disable().ok();
 }
@@ -90,6 +93,12 @@ fn touch_test() {
         thread::sleep(Duration::from_millis(20));
         println!("reading: {}", input_pin.read());
     }
+}
+
+fn read_touch_val() -> bool {
+    let gpio_instance: Gpio = Gpio::new().unwrap();
+    let input_pin = gpio_instance.get(23).unwrap().into_input();
+    input_pin.is_low()
 }
 
 fn new_motor_test() {
